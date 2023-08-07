@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 7df32e0458424c5a9fcc35398c992de4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chatStorage: {fileID: 11400000, guid: 6d11b395edae7d245948e6e792a2485c, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

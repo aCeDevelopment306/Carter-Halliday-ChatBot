@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Api.Gax.Grpc.Gcp</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Api.Gax.Grpc.Gcp.DefaultChannelCredentialsCache">
+            <summary>
+            Caches the application default channel credentials, applying a specified set of scopes if they require any.
+            </summary>
+        </member>
+        <member name="F:Google.Api.Gax.Grpc.Gcp.DefaultChannelCredentialsCache._lazyScopedDefaultChannelCredentials">
+            <summary>
+            Lazily-created task to retrieve the default application channel credentials. Once completed, this
+            task can be used whenever channel credentials are required. The returned task always runs in the
+            thread pool, so its result can be used synchronously from synchronous methods without risk of deadlock.
+            The same channel credentials are used by all pools. The field is initialized in the constructor, as it uses
+            _scopes, and you can't refer to an instance field within an instance field initializer.
+            </summary>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.DefaultChannelCredentialsCache.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+            <summary>
+            Creates a cache which will apply the specified scopes to the default application credentials
+            if they require any.
+            </summary>
+            <param name="scopes">The scopes to apply. Must not be null, and must not contain null references. May be empty.</param>
+            <param name="useJwtAccessWithScopes">The flag preferring use of self-signed JWTs over OAuth tokens when OAuth scopes are explicitly set.</param>
+        </member>
+        <member name="T:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool">
+            <summary>
+            A pool of GCP call invokers for the same service, but with potentially different endpoints and/or channel options.
+            Each endpoint/options pair has a single <see cref="T:Grpc.Gcp.GcpCallInvoker"/>. All call invokers created by this pool use
+            default application credentials. This class is thread-safe.
+            </summary>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a call invoker pool which will apply the specified scopes to the default application credentials
+            if they require any.
+            </summary>
+            <param name="scopes">The scopes to apply. Must not be null, and must not contain null references. May be empty.</param>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+            <summary>
+            Creates a call invoker pool which will apply the specified scopes to the default application credentials
+            if they require any.
+            </summary>
+            <param name="scopes">The scopes to apply. Must not be null, and must not contain null references. May be empty.</param>
+            <param name="useJwtAccessWithScopes">A flag preferring use of self-signed JWTs over OAuth tokens 
+            when OAuth scopes are explicitly set.</param>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool.ShutdownChannelsAsync">
+            <summary>
+            Shuts down all the open channels of all currently-allocated call invokers asynchronously. This does not prevent
+            the call invoker pool from being used later on, but the currently-allocated call invokers will not be reused.
+            </summary>
+            <returns>A task which will complete when all the (current) channels have been shut down.</returns>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool.GetCallInvoker(System.String,Google.Api.Gax.Grpc.GrpcChannelOptions)">
+            <summary>
+            Returns a call invoker from this pool, creating a new one if there is no call invoker
+            already associated with <paramref name="endpoint"/> and <paramref name="options"/>.
+            </summary>
+            <param name="endpoint">The endpoint to connect to. Must not be null.</param>
+            <param name="options">
+            The options to use for each channel created by the call invoker, possibly including the special
+            <see cref="F:Grpc.Gcp.GcpCallInvoker.ApiConfigChannelArg">GcpCallInvoker.ApiConfigChannelArg</see> option to
+            control the <see cref="T:Grpc.Gcp.GcpCallInvoker"/> behavior itself.
+            </param>
+            <returns>A call invoker for the specified endpoint.</returns>
+        </member>
+        <member name="M:Google.Api.Gax.Grpc.Gcp.GcpCallInvokerPool.GetCallInvokerAsync(System.String,Google.Api.Gax.Grpc.GrpcChannelOptions)">
+            <summary>
+            Asynchronously returns a call invoker from this pool, creating a new one if there is no call invoker
+            already associated with <paramref name="endpoint"/> and <paramref name="options"/>.
+            </summary>
+            <param name="endpoint">The endpoint to connect to. Must not be null.</param>
+            <param name="options">
+            The options to use for each channel created by the call invoker, possibly including the special
+            <see cref="F:Grpc.Gcp.GcpCallInvoker.ApiConfigChannelArg">GcpCallInvoker.ApiConfigChannelArg</see> option to
+            control the <see cref="T:Grpc.Gcp.GcpCallInvoker"/> behavior itself.
+            </param>
+            <returns>A task representing the asynchronous operation. The value of the completed
+            task will be a call invoker for the specified endpoint.</returns>
+        </member>
+    </members>
+</doc>
